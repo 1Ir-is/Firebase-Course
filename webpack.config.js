@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
     mode: "development",
@@ -8,4 +9,9 @@ module.exports = {
         filename: "bundle.js"
     },
     watch: true,
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(process.env)  // Add this line
+        })
+    ]
 }

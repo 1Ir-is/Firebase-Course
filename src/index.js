@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAqKoTwK4qLUy34m-48cDcN8n-16VE3xQI",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "fir-course-cff74.firebaseapp.com",
     projectId: "fir-course-cff74",
     storageBucket: "fir-course-cff74.appspot.com",
