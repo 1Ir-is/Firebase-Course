@@ -3,10 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.min.css">
     <title>Firebase With Me</title>
 </head>
 <body>
+    <div class="container">
+        <form class="add">
+            <h2>Add a New Movie</h2>
+            <input type="text" placeholder="Name" name="name" autocomplete="off">
+            <input type="text" placeholder="Description" name="description" autocomplete="off">
+            <input type="submit" value="Add Movie">
+        </form>
+
+        <!-- Table to display movies -->
+        <table id="movies-table" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
     <script src="bundle.js"></script>
-    
 </body>
 </html>
