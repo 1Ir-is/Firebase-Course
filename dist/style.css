@@ -10,24 +10,26 @@ body {
     margin: 0;
 }
 
-/* Container for form and table to align them in a row */
+/* Container styling */
 .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 20px; /* Space between the form and table */
+    width: 100%;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
 }
 
-/* Common form styling */
+/* Flex layout for form and table */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Form styling */
 form {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
-    margin-bottom: 20px;  /* Space between forms */
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -41,24 +43,19 @@ form h2 {
     color: #333;
 }
 
-/* Input field styling */
-input[type="text"] {
+/* Input field and select styling */
+input[type="text"],
+select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
-    width: 100%;
+    width: 100%; /* Full width */
     box-sizing: border-box;
     transition: border-color 0.3s ease;
 }
 
-/* Input focus styling */
-input[type="text"]:focus {
-    outline: none;
-    border-color: #007bff;
-}
-
-/* Submit button styling */
+/* Adjust the width of the submit button */
 input[type="submit"] {
     padding: 10px;
     background-color: #007bff;
@@ -74,50 +71,52 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-/* Specific styling for add form */
-form.add {
-    border-left: 5px solid #28a745;  /* Green border for the add form */
+/* Filter container styling */
+.filter-container {
+    margin-bottom: 20px;
 }
 
-/* Specific styling for delete form */
-form.delete {
-    border-left: 5px solid #dc3545;  /* Red border for the delete form */
+.filter-container label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.filter-container select {
+    width: 100%;
 }
 
 /* Table styling */
-/* Center the table and add borders */
 table {
-    width: 100%; /* Set table width to 100% of its container */
-    max-width: 600px; /* Optional: Limit the maximum width */
-    margin: 0 auto; /* Center the table horizontally */
+    width: 100%;
     border-collapse: collapse;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 table, th, td {
-    border: 1px solid #ddd; /* Add border to table, th, and td */
+    border: 1px solid #ddd;
 }
 
 th, td {
-    padding: 12px; /* Add padding inside cells */
+    padding: 12px;
     text-align: left;
 }
 
 thead th {
-    background-color: #007bff; /* Header background color */
-    color: #fff; /* Header text color */
-    font-size: 16px; /* Header font size */
+    background-color: #007bff;
+    color: #fff;
+    font-size: 16px;
 }
 
 tr:nth-child(even) {
-    background-color: #f9f9f9; /* Alternate row background color */
+    background-color: #f9f9f9;
 }
 
 tr:hover {
-    background-color: #f1f1f1; /* Hover effect */
+    background-color: #f1f1f1;
 }
 
+/* Delete button styling */
 .delete-btn {
     background: none;
     border: none;
@@ -132,13 +131,14 @@ tr:hover {
 }
 
 /* Responsive design */
-@media (max-width: 600px) {
-    .container {
+@media (max-width: 768px) {
+    .row {
         flex-direction: column;
-        align-items: center;
     }
-    
-    form, table {
-        width: 90%;
+
+    form,
+    .filter-container,
+    table {
+        width: 100%;
     }
 }
