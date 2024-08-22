@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp } from "firebase/firestore";
+import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where, orderBy, serverTimestamp, updateDoc } from "firebase/firestore";
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -52,12 +52,19 @@ const displayMovies = async (category = '', sortBy = 'name:asc') => {
                 <td>${movie.category}</td>
                 <td>${formatTimestamp(movie.createAt)}</td>
                 <td>${formatTimestamp(movie.updatedAt)}</td>
-                <td><button class="delete-btn btn btn-link" data-id="${movie.id}"><i class="bi bi-trash"></i></button></td>
+                <td>
+                    <button class="edit-btn btn btn-link" data-id="${movie.id}" data-name="${movie.name}" data-description="${movie.description}" data-category="${movie.category}">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="delete-btn btn btn-link" data-id="${movie.id}">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </td>
             `;
             tableBody.appendChild(row);
         });
 
-        // Add event listeners for delete buttons
+        // Add event listeners for delete and edit buttons
         document.querySelectorAll(".delete-btn").forEach(button => {
             button.addEventListener("click", async () => {
                 const id = button.getAttribute("data-id");
@@ -69,6 +76,24 @@ const displayMovies = async (category = '', sortBy = 'name:asc') => {
                 } catch (error) {
                     console.error("Error deleting document:", error);
                 }
+            });
+        });
+
+        document.querySelectorAll(".edit-btn").forEach(button => {
+            button.addEventListener("click", () => {
+                const id = button.getAttribute("data-id");
+                const name = button.getAttribute("data-name");
+                const description = button.getAttribute("data-description");
+                const category = button.getAttribute("data-category");
+
+                const editForm = document.querySelector("#edit-form");
+                editForm.id.value = id;
+                editForm.name.value = name;
+                editForm.description.value = description;
+                editForm.category.value = category;
+
+                const modal = document.querySelector("#edit-modal");
+                modal.style.display = "block";
             });
         });
 
@@ -110,4 +135,37 @@ document.querySelector("#category-filter").addEventListener("change", e => {
 document.querySelector("#sort-by").addEventListener("change", e => {
     const selectedSort = e.target.value;
     displayMovies(document.querySelector("#category-filter").value, selectedSort); // Refresh the table based on selected sort option
+});
+
+// Handle edit form submission
+const editForm = document.querySelector("#edit-form");
+editForm.addEventListener("submit", async e => {
+    e.preventDefault();
+    try {
+        const id = editForm.id.value;
+        const documentReference = doc(db, "movies", id);
+        await updateDoc(documentReference, {
+            name: editForm.name.value,
+            description: editForm.description.value,
+            category: editForm.category.value,
+            updatedAt: serverTimestamp()
+        });
+        document.querySelector("#edit-modal").style.display = "none";
+        displayMovies(document.querySelector("#category-filter").value, document.querySelector("#sort-by").value); // Refresh the table
+        alert("Movie updated successfully!"); // Success alert
+    } catch (error) {
+        console.error("Error updating document:", error);
+    }
+});
+
+// Handle modal close
+document.querySelector(".close").addEventListener("click", () => {
+    document.querySelector("#edit-modal").style.display = "none";
+});
+
+// Close modal when clicking outside of it
+window.addEventListener("click", (event) => {
+    if (event.target === document.querySelector("#edit-modal")) {
+        document.querySelector("#edit-modal").style.display = "none";
+    }
 });
